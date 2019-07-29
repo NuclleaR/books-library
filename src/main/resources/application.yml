@@ -1,0 +1,44 @@
+application:
+  version: 1.0
+  build-number: 1
+
+spring:
+
+  shell:
+    interactive:
+      enabled: false
+
+  logging:
+    level:
+      root: ERROR
+
+---
+spring:
+  profiles: shell
+
+  shell:
+    interactive:
+      enabled: true
+
+---
+spring:
+  profiles: dev
+
+  datasource:
+    url: jdbc:h2:file:/Users/skoreniuk/playground/java/spring/books/data/h2db
+#    url: jdbc:h2:mem:booksdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+
+
+  h2:
+    console:
+      enabled: true
+      path: /db
