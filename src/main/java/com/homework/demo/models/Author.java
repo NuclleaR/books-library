@@ -2,6 +2,7 @@ package com.homework.demo.models;
 
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "authors")

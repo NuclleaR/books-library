@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
@@ -25,21 +24,22 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Author getAuthorById(long id) {
-        Author author = authorRepository.findById(id);
-        return author;
+        return authorRepository.findById(id);
     }
 
     @Override
-    public Author getAuthorByName(String name) {
-        Author author = authorRepository.findByFirstName(name);
-        return author;
+    public List<Author> getAuthorByName(String name) {
+        return authorRepository.findByName(name);
+    }
+
+    @Override
+    public Author addAuthor(Author author) {
+        return this.authorRepository.save(author);
     }
 
     @Override
     public Author addAuthor(String firstName, String lastName) {
         Author author = new Author(0, firstName, lastName);
-        Author authorSaved = this.authorRepository.save(author);
-        System.out.println("Author saved");
-        return authorSaved;
+        return this.authorRepository.save(author);
     }
 }

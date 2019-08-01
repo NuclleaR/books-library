@@ -27,32 +27,39 @@ public class AuthorRepositoryImpl implements AuthorRepository {
 
     @Override
     public Author findById(Long id) {
-        Author author = entityManager.find(Author.class, id);
-        return author;
+        return entityManager.find(Author.class, id);
     }
 
     @Override
-    public Author findByFirstName(String name) {
+    public List<Author> findByName(String name) {
         TypedQuery<Author> query = entityManager.createQuery(
-            "select author from Author author where lower(author.firstName) like lower(concat('%', :name,'%'))",
+            "select author from Author author where " +
+                "lower(author.firstName) like lower(concat('%', :name,'%')) or " +
+                "lower(author.lastName) like lower(concat('%', :name,'%'))",
             Author.class
         );
         query.setParameter("name", name);
 
-        Author author;
+        List<Author> authors;
 
         try {
-            author = query.getSingleResult();
+            authors = query.getResultList();
         } catch (NoResultException e) {
             System.err.println(e.getMessage());
-            author = null;
+            authors = null;
         }
-        return author;
+        return authors;
     }
 
     @Override
     public Author save(Author author) {
         entityManager.persist(author);
+        entityManager.refresh(author);
         return author;
+    }
+
+    @Override
+    public Author update(Author author) {
+        return entityManager.merge(author);
     }
 }

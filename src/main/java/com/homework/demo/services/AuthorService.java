@@ -9,7 +9,9 @@ public interface AuthorService {
 
     Author getAuthorById(long id);
 
-    Author getAuthorByName(String name);
+    List<Author> getAuthorByName(String name);
+
+    Author addAuthor(Author author);
 
     Author addAuthor(String firstName, String lastName);
 }

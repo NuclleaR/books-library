@@ -11,7 +11,6 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 
 import java.util.List;
-import java.util.Optional;
 
 @Profile("shell")
 @ShellComponent
@@ -38,8 +37,8 @@ public class BooksShell {
         if (id >= 0) {
             Author author = authorService.getAuthorById(id);
             System.out.println(author);
-        } else if (id < 0 && !name.isEmpty()) {
-            Author author = authorService.getAuthorByName(name);
+        } else if (id == -1 && !name.isEmpty()) {
+            List<Author> author = authorService.getAuthorByName(name);
             System.out.println(author);
         } else {
             System.out.println("At least one option should be passed");

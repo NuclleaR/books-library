@@ -12,6 +12,11 @@ spring:
     level:
       root: ERROR
 
+server:
+  port: 9090
+  error:
+    include-stacktrace: never
+
 ---
 spring:
   profiles: shell
